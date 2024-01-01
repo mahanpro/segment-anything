@@ -71,7 +71,10 @@ def perform_predction(filename, combination, directory, Dilation):
 
     new_image = nib.Nifti1Image(final_output, affine=np.eye(4))
     new_image.header.get_xyzt_units()
-    new_image.to_filename(os.path.join(directory, os.path.join(combination, filename + ".nii.gz")))
+    if Dilation:
+        new_image.to_filename(os.path.join(directory, os.path.join(combination + "_with_dilation", filename + ".nii.gz")))
+    else:
+        new_image.to_filename(os.path.join(directory, os.path.join(combination + "_without_dilation", filename + ".nii.gz")))
 
     return filename_object.dice, filename_object.recall, filename_object.precision, filename_object.FNR, filename_object.specifity
 
